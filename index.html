@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MediGuide AI</title>
+  <style>
+    html,body{height:100%;margin:0;font-family:Segoe UI,Roboto,Arial,sans-serif;background:#131314;color:#e3e3e3}
+    .container{width:100%;max-width:900px;margin:32px auto;padding:16px}
+    header{margin-bottom:12px}
+    header h1{margin:0;font-size:1.5rem;color:#9b72cb}
+    .chat{height:60vh;background:#1e1f20;border:1px solid #444;padding:12px;overflow:auto;border-radius:8px}
+    .message{margin:8px 0;padding:8px 12px;border-radius:6px;max-width:75%}
+    .message.user{background:#282a2c;margin-left:auto;text-align:right}
+    .message.bot{background:#222;border:1px solid #333}
+    .input-row{display:flex;gap:8px;margin-top:12px}
+    #user-input{flex:1;padding:10px;border-radius:6px;border:1px solid #444;background:#0f0f10;color:#fff}
+    #send-btn{padding:10px 14px;border-radius:6px;background:#4285f4;color:#fff;border:none;cursor:pointer}
+    .note{color:#8e918f;text-align:center;margin-top:8px;font-size:0.85rem}
+    @media (max-width:600px){.container{margin:12px;padding:12px}.chat{height:50vh}}
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>MediGuide</h1>
+      <p class="note">How can I help with your health today?</p>
+    </header>
+
+    <section id="chat" class="chat" aria-live="polite"></section>
+
+    <div class="input-row">
+      <input id="user-input" type="text" placeholder="Ask MediGuide AI..." autocomplete="off">
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('user-input');
+    const send = document.getElementById('send-btn');
+
+    function appendMessage(text, cls) {
+      const el = document.createElement('div');
+      el.className = 'message ' + cls;
+      el.textContent = text;
+      chat.appendChild(el);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function sendMessage() {
+      const v = input.value.trim();
+      if (!v) return;
+      appendMessage(v, 'user');
+      input.value = '';
+      setTimeout(() => appendMessage('This is a minimal local demo response.', 'bot'), 400);
+    }
+
+    send.addEventListener('click', sendMessage);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
+  </script>
+
+</body>
+
+</html>
